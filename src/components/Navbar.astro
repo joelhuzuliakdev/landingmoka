@@ -1,0 +1,76 @@
+---
+const links = [
+    { label: 'Menú',     href: '#menu'     },
+    { label: 'Nosotros', href: '#nosotros' },
+    { label: 'Galería',  href: '#galeria'  },
+    { label: 'Contacto', href: '#contacto' },
+]
+---
+<header
+    id="navbar"
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-cream/80 backdrop-blur-md border-b border-mocha-100"
+    >
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#" class="font-serif text-2xl font-semibold tracking-wide text-mocha-700">
+            moKa
+        </a>
+
+        <!-- Links desktop -->
+        <ul class="hidden md:flex gap-8">
+            {links.map(l => (
+                <li>
+                <a
+                    href={l.href}
+                    class="text-sm font-medium text-mocha-500 hover:text-mocha-800 transition-colors"
+                >
+                    {l.label}
+                </a>
+                </li>
+            ))}
+        </ul>
+
+        <!-- CTA -->
+        <a
+            href="#contacto"
+            class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-mocha-600 text-cream text-sm font-medium hover:bg-mocha-700 transition-colors"
+        >
+            Reservar mesa
+        </a>
+
+        <!-- Hamburger mobile -->
+        <button
+            id="menu-toggle"
+            aria-label="Abrir menú"
+            class="md:hidden flex flex-col gap-1.5 p-1"
+        >
+            <span class="w-5 h-px bg-mocha-700 block"></span>
+            <span class="w-5 h-px bg-mocha-700 block"></span>
+            <span class="w-5 h-px bg-mocha-700 block"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3 bg-cream/95">
+        {links.map(l => (
+            <a
+                href={l.href}
+                class="text-sm font-medium text-mocha-600 hover:text-mocha-900 transition-colors"
+            >
+                {l.label}
+            </a>
+        ))}
+        <a
+            href="#contacto"
+            class="mt-2 px-5 py-2 rounded-full bg-mocha-600 text-cream text-sm font-medium text-center"
+        >
+            Reservar mesa
+        </a>
+    </div>
+</header>
+
+<script>
+    const toggle = document.getElementById('menu-toggle')
+    const menu   = document.getElementById('mobile-menu')
+    toggle?.addEventListener('click', () => menu?.classList.toggle('hidden'))
+</script>

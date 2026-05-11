@@ -1,11 +1,272 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro'
+import Navbar from '../components/Navbar.astro'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const menu = [
+	{ nombre: 'Espresso',          desc: 'Shot concentrado de origen único',           precio: '$1.800' },
+	{ nombre: 'Flat White',        desc: 'Doble ristretto con leche texturizada',       precio: '$2.400' },
+	{ nombre: 'Latte de vainilla', desc: 'Suave, cremoso, con extracto natural',        precio: '$2.600' },
+	{ nombre: 'Cold Brew',         desc: 'Macerado 18 h, servido sobre hielo',          precio: '$2.800' },
+	{ nombre: 'Chai Latte',        desc: 'Mezcla de especias con leche al vapor',       precio: '$2.500' },
+	{ nombre: 'Matcha Latte',      desc: 'Matcha ceremonial batido con leche de avena', precio: '$2.900' },
+]
+
+const valores = [
+	{ icono: '🌿', titulo: 'Origen sostenible', texto: 'Trabajamos con pequeños productores de Etiopía y Colombia.' },
+	{ icono: '☕', titulo: 'Tostado propio',     texto: 'Tostamos cada lote a la semana para máxima frescura.' },
+	{ icono: '🤍', titulo: 'Espacio tranquilo',  texto: 'Un rincón diseñado para pausar, leer y reconectar.' },
+]
+
+const reseñas = [
+	{ nombre: 'Valentina R.', texto: 'El mejor flat white que tomé en la ciudad. El espacio es increíble.' },
+	{ nombre: 'Marcos T.',    texto: 'Un ambiente cálido y auténtico. Volvería todos los días.' },
+	{ nombre: 'Lucía P.',     texto: 'El cold brew es adictivo. Muy buen servicio, siempre amables.' },
+]
+
+// Imágenes de Unsplash — gratuitas, sin atribución requerida
+const imgs = {
+	hero:     'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80',
+	nosotros: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900&q=80',
+	g1:       'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80',
+	g2:       'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80',
+	g3:       'https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&q=80',
+	g4:       'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80',
+	g5:       'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80',
+}
 ---
 
 <Layout>
-	<Welcome />
+	<Navbar />
+
+	<!-- ── HERO ────────────────────────────────────────── -->
+	<section class="relative min-h-screen flex items-center overflow-hidden">
+		<!-- Imagen de fondo con overlay -->
+		<div class="absolute inset-0 -z-10">
+			<img
+				src={imgs.hero}
+				alt="Taza de café con arte latte"
+				class="w-full h-full object-cover"
+			/>
+			<div class="absolute inset-0 bg-cream/75"></div>
+		</div>
+		<!-- círculos decorativos -->
+		<div class="absolute -right-32 -top-32 w-[500px] h-[500px] rounded-full bg-mocha-200/30 -z-10"></div>
+
+			<div class="max-w-6xl mx-auto px-6 pt-28 pb-20 grid md:grid-cols-2 gap-12 items-center">
+			<!-- Texto -->
+				<div>
+					<span class="inline-block mb-4 px-4 py-1 rounded-full bg-sage-100 text-sage-600 text-xs font-medium tracking-widest uppercase">
+					Café de especialidad
+					</span>
+					<h1 class="font-serif text-5xl md:text-6xl leading-tight text-mocha-800 mb-6">
+						El café que<br />
+						<em class="not-italic text-mocha-500">merece tu mañana</em>
+					</h1>
+					<p class="text-mocha-600 text-lg leading-relaxed mb-8 max-w-md">
+						En Moca creemos que cada taza es una pequeña ceremonia.
+						Granos seleccionados, tostado artesanal y un espacio que invita a quedarse.
+					</p>
+					<div class="flex flex-wrap gap-4">
+					<a href="#menu"
+						class="px-7 py-3 rounded-full bg-mocha-600 text-cream text-sm font-medium hover:bg-mocha-700 transition-colors">
+						Ver menú
+					</a>
+					<a href="#nosotros"
+						class="px-7 py-3 rounded-full border border-mocha-400 text-mocha-700 text-sm font-medium hover:bg-mocha-100 transition-colors">
+						Nuestra historia
+					</a>
+				</div>
+			</div>
+
+			<!-- Imagen circular hero -->
+			<div class="relative flex justify-center">
+				<div class="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white shadow-xl">
+					<img
+						src={imgs.hero}
+						alt="Café espresso"
+						class="w-full h-full object-cover"
+					/>
+				</div>
+				<!-- badge flotante -->
+				<div class="absolute bottom-4 right-4 bg-white rounded-2xl px-4 py-3 shadow-md border border-mocha-100 text-center">
+					<p class="text-2xl font-serif font-semibold text-mocha-700">4.9</p>
+					<p class="text-xs text-mocha-400">★★★★★</p>
+					<p class="text-xs text-mocha-300 mt-0.5">+200 reseñas</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ── VALORES ──────────────────────────────────────── -->
+	<section class="py-16 bg-latte/50">
+		<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+			{valores.map(v => (
+				<div class="flex gap-4 items-start">
+				<span class="text-3xl">{v.icono}</span>
+				<div>
+					<h3 class="font-serif text-lg text-mocha-700 mb-1">{v.titulo}</h3>
+					<p class="text-sm text-mocha-500 leading-relaxed">{v.texto}</p>
+				</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- ── MENÚ ─────────────────────────────────────────── -->
+	<section id="menu" class="py-24">
+		<div class="max-w-6xl mx-auto px-6">
+			<div class="text-center mb-14">
+				<span class="text-xs tracking-widest uppercase text-sage-500 font-medium">Lo que servimos</span>
+				<h2 class="font-serif text-4xl text-mocha-800 mt-2">Menú popular</h2>
+			</div>
+
+			<div class="grid md:grid-cols-2 gap-4">
+				{menu.map(item => (
+				<div class="flex items-center justify-between gap-4 px-6 py-5 rounded-2xl bg-white border border-mocha-100 hover:border-mocha-300 transition-colors group">
+					<div>
+						<p class="font-medium text-mocha-800 group-hover:text-mocha-600 transition-colors">{item.nombre}</p>
+						<p class="text-sm text-mocha-400 mt-0.5">{item.desc}</p>
+					</div>
+					<span class="shrink-0 font-serif text-mocha-600 font-semibold">{item.precio}</span>
+				</div>
+				))}
+			</div>
+			<p class="text-center text-sm text-mocha-400 mt-8">
+				Menú completo disponible en el local · Precios en ARS
+			</p>
+		</div>
+	</section>
+
+	<!-- ── NOSOTROS ─────────────────────────────────────── -->
+	<section id="nosotros" class="py-24 bg-mocha-50">
+		<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+			<!-- Imagen -->
+			<div class="rounded-3xl overflow-hidden h-96 shadow-md">
+				<img
+				src={imgs.nosotros}
+				alt="Barista preparando café"
+				class="w-full h-full object-cover"
+				/>
+			</div>
+			<!-- Texto -->
+			<div>
+				<span class="text-xs tracking-widest uppercase text-sage-500 font-medium">Nuestra historia</span>
+				<h2 class="font-serif text-4xl text-mocha-800 mt-2 mb-6">Nació de un amor por el café bien hecho</h2>
+				<p class="text-mocha-500 leading-relaxed mb-4">
+					Moca abrió sus puertas con una sola convicción: que el café de calidad no tiene que ser complicado.
+					Queremos que cada visita sea un momento para vos.
+				</p>
+				<p class="text-mocha-500 leading-relaxed mb-8">
+					Trabajamos directamente con productores, controlamos cada etapa del tostado y entrenamos
+					a nuestro equipo con la misma dedicación que ponemos en cada taza.
+				</p>
+				<div class="flex gap-10">
+					<div>
+						<p class="font-serif text-3xl text-mocha-700">+2k</p>
+						<p class="text-xs text-mocha-400 mt-0.5">tazas por semana</p>
+					</div>
+					<div>
+						<p class="font-serif text-3xl text-mocha-700">100%</p>
+						<p class="text-xs text-mocha-400 mt-0.5">grano de especialidad</p>
+					</div>
+					<div>
+						<p class="font-serif text-3xl text-mocha-700">3</p>
+						<p class="text-xs text-mocha-400 mt-0.5">orígenes seleccionados</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ── GALERÍA ──────────────────────────────────────── -->
+	<section id="galeria" class="py-24">
+		<div class="max-w-6xl mx-auto px-6">
+			<div class="text-center mb-12">
+				<span class="text-xs tracking-widest uppercase text-sage-500 font-medium">Ambiente</span>
+				<h2 class="font-serif text-4xl text-mocha-800 mt-2">El espacio</h2>
+			</div>
+
+			<div class="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[180px]">
+				<!-- Imagen grande — ocupa 2 cols y 2 filas -->
+				<div class="col-span-2 row-span-2 rounded-2xl overflow-hidden">
+					<img src={imgs.g1} alt="Interior del café Moca" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+				</div>
+				<div class="rounded-2xl overflow-hidden">
+					<img src={imgs.g2} alt="Mesa de café" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+				</div>
+				<div class="rounded-2xl overflow-hidden">
+					<img src={imgs.g3} alt="Cappuccino" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+				</div>
+				<div class="rounded-2xl overflow-hidden">
+					<img src={imgs.g4} alt="Barista" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+				</div>
+				<div class="rounded-2xl overflow-hidden">
+					<img src={imgs.g5} alt="Latte art" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ── RESEÑAS ──────────────────────────────────────── -->
+	<section class="py-24 bg-sage-50">
+		<div class="max-w-6xl mx-auto px-6">
+			<div class="text-center mb-14">
+				<span class="text-xs tracking-widest uppercase text-sage-500 font-medium">Opiniones</span>
+				<h2 class="font-serif text-4xl text-mocha-800 mt-2">Lo que dicen nuestros clientes</h2>
+			</div>
+			<div class="grid md:grid-cols-3 gap-6">
+				{reseñas.map(r => (
+				<div class="bg-white rounded-2xl px-7 py-6 border border-sage-100">
+					<p class="text-mocha-400 text-lg mb-3">★★★★★</p>
+					<p class="text-mocha-600 leading-relaxed text-sm mb-5">"{r.texto}"</p>
+					<p class="text-xs font-medium text-mocha-400">{r.nombre}</p>
+				</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- ── CONTACTO ─────────────────────────────────────── -->
+	<section id="contacto" class="py-24">
+		<div class="max-w-2xl mx-auto px-6 text-center">
+			<span class="text-xs tracking-widest uppercase text-sage-500 font-medium">Encontranos</span>
+			<h2 class="font-serif text-4xl text-mocha-800 mt-2 mb-4">Vení a tomar un café</h2>
+			<p class="text-mocha-500 mb-10">Abrimos de lunes a sábado de 8 a 20 h. Domingos de 9 a 14 h.</p>
+
+			<div class="grid sm:grid-cols-3 gap-6 mb-12">
+				<div class="bg-mocha-50 rounded-2xl p-5">
+					<p class="text-xl mb-2">📍</p>
+					<p class="text-sm font-medium text-mocha-700">Dirección</p>
+					<p class="text-sm text-mocha-500 mt-1">Av. Ejemplo 1234<br />Río Segundo, Córdoba</p>
+				</div>
+				<div class="bg-mocha-50 rounded-2xl p-5">
+					<p class="text-xl mb-2">🕗</p>
+					<p class="text-sm font-medium text-mocha-700">Horario</p>
+					<p class="text-sm text-mocha-500 mt-1">Lun–Sáb: 8 – 20 h<br />Dom: 9 – 14 h</p>
+				</div>
+				<div class="bg-mocha-50 rounded-2xl p-5">
+					<p class="text-xl mb-2">📱</p>
+					<p class="text-sm font-medium text-mocha-700">Contacto</p>
+					<p class="text-sm text-mocha-500 mt-1">@moca.cafe<br />hola@moca.cafe</p>
+				</div>
+			</div>
+
+			<a href="mailto:hola@moca.cafe"
+				class="px-8 py-3 rounded-full bg-mocha-600 text-cream text-sm font-medium hover:bg-mocha-700 transition-colors">
+				Escribinos
+			</a>
+		</div>
+	</section>
+
+	<!-- ── FOOTER ───────────────────────────────────────── -->
+	<footer class="border-t border-mocha-100 py-8">
+		<div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-mocha-400">
+			<span class="font-serif text-mocha-600 text-lg">moKa</span>
+			<p>© {new Date().getFullYear()} MoKa Café. Todos los derechos reservados.</p>
+			<div class="flex gap-6">
+				<a href="#" class="hover:text-mocha-600 transition-colors">Instagram</a>
+				<a href="#" class="hover:text-mocha-600 transition-colors">Facebook</a>
+			</div>
+		</div>
+	</footer>
 </Layout>
